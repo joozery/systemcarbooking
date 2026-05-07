@@ -8,6 +8,8 @@ import { Stats } from "@/components/sections/Stats";
 import { AboutUs } from "@/components/sections/AboutUs";
 import { ContactUs } from "@/components/sections/ContactUs";
 
+import { Footer } from "@/components/layout/Footer";
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -32,10 +34,12 @@ export default function Home() {
           <Stats />
 
           {/* Contact Us Section */}
-          <ContactUs />
+          <div id="contact">
+            <ContactUs />
+          </div>
         </div>
-
       </main>
+      <Footer />
     </div>
   );
 }

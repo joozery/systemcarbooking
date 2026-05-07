@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 const notoTh = Noto_Sans_Thai({
   variable: "--font-noto-thai",
@@ -20,6 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th" className={`${notoTh.variable} antialiased`} suppressHydrationWarning>
+      <head>
+        <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+      </head>
       <body className="min-h-full font-sans" suppressHydrationWarning>{children}</body>
     </html>
   );

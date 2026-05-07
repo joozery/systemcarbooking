@@ -7,12 +7,12 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 z-50 w-full border-b border-slate-100 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <div className="flex h-10 w-10 items-center justify-center text-[#001A3D]">
             <Crown className="h-8 w-8" fill="currentColor" />
           </div>
           <span className="text-xl font-black tracking-tighter uppercase text-[#001A3D]">Crown Wealth</span>
-        </div>
+        </Link>
         
         <div className="hidden items-center gap-8 lg:flex">
           <Link href="#" className="text-sm font-bold text-[#0047AB] border-b-2 border-[#0047AB] pb-1">หน้าแรก</Link>
@@ -30,7 +30,7 @@ export function Navbar() {
           <Link href="/partner/register" className="hidden text-sm font-bold text-[#0047AB] hover:text-[#001A3D] transition-colors lg:block">
             ร่วมเป็นพาร์ทเนอร์
           </Link>
-          <button className="rounded-xl bg-[#001A3D] px-6 py-2.5 text-xs font-bold text-white transition-all hover:bg-[#002A5D] shadow-md shadow-[#001A3D]/20">
+          <button className="rounded-lg bg-[#001A3D] px-6 py-2.5 text-xs font-bold text-white transition-all hover:bg-[#002A5D] shadow-md shadow-[#001A3D]/20">
             เข้าสู่ระบบ
           </button>
         </div>
