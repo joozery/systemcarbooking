@@ -17,26 +17,25 @@ export default function Home() {
       <main className="pt-16">
         <Hero />
         
-        <div className="mx-auto max-w-[1440px] px-10 py-12 space-y-16">
-          {/* Services Section */}
-          <div id="services">
-            <Services />
-          </div>
-          
-          {/* About Us Section */}
-          <AboutUs />
+        {/* Full Width Services */}
+        <div id="services">
+          <Services />
+        </div>
 
-          {/* How It Works Section */}
+        {/* About & How It Works (White BG / Container) */}
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 space-y-32">
+          <AboutUs />
           <div id="how-it-works">
             <HowItWorks />
           </div>
+        </div>
 
-          <Stats />
+        {/* Full Width Stats Section */}
+        <Stats />
 
-          {/* Contact Us Section */}
-          <div id="contact">
-            <ContactUs />
-          </div>
+        {/* Contact Us (Container) */}
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24" id="contact">
+          <ContactUs />
         </div>
       </main>
       <Footer />

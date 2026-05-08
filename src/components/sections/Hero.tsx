@@ -16,6 +16,7 @@ export function Hero() {
           fill 
           className="object-cover object-center"
           priority
+          sizes="100vw"
         />
       </div>
 
@@ -82,6 +83,7 @@ export function Hero() {
                fill 
                className="object-contain object-right"
                priority
+               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 650px"
              />
           </div>
         </motion.div>

@@ -231,8 +231,8 @@ export function BookingWizard() {
   };
 
   const serviceOptions = [
-    { id: "รถบรรทุก", icon: Truck, desc: "สำหรับขนย้ายสินค้าหรือสิ่งของขนาดใหญ่" },
-    { id: "รถลากจูง", icon: Car, desc: "สำหรับยกรถเสียหรือเกิดอุบัติเหตุ" },
+    { id: "รถบรรทุก", image: "/car/truck.png", desc: "สำหรับขนย้ายสินค้าหรือสิ่งของขนาดใหญ่" },
+    { id: "รถลากจูง", image: "/car/larh.png", desc: "สำหรับยกรถเสียหรือเกิดอุบัติเหตุ" },
   ];
 
   const reasonOptions = [
@@ -268,22 +268,24 @@ export function BookingWizard() {
           {step === 1 && (
             <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
               <h2 className="text-2xl font-black text-[#001A3D]">เลือกประเภทบริการที่คุณต้องการ</h2>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="mt-8 grid gap-6 sm:grid-cols-2">
                 {serviceOptions.map((opt) => (
                   <button
                     key={opt.id}
                     onClick={() => { updateData("serviceType", opt.id); handleNext(); }}
-                    className={`group flex flex-col items-center rounded-lg border-2 p-8 text-center transition-all ${
-                      data.serviceType === opt.id ? "border-[#0047AB] bg-[#0047AB]/5" : "border-slate-100 hover:border-[#0047AB]/50"
+                    className={`group flex flex-col items-center rounded-2xl border-2 p-8 text-center transition-all duration-300 ${
+                      data.serviceType === opt.id ? "border-[#0047AB] bg-[#0047AB]/5 ring-4 ring-[#0047AB]/5" : "border-slate-100 hover:border-[#0047AB]/30 bg-white"
                     }`}
                   >
-                    <div className={`mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors ${
-                      data.serviceType === opt.id ? "bg-[#0047AB] text-white" : "bg-slate-100 text-slate-500 group-hover:bg-[#0047AB]/20 group-hover:text-[#0047AB]"
-                    }`}>
-                      <opt.icon className="h-8 w-8" />
+                    <div className="relative mb-4 flex h-40 w-full items-center justify-center transition-all duration-500 group-hover:scale-110">
+                       <img 
+                        src={opt.image} 
+                        alt={opt.id}
+                        className="h-full w-full object-contain drop-shadow-2xl"
+                       />
                     </div>
                     <span className="text-xl font-bold text-[#001A3D]">{opt.id}</span>
-                    <span className="mt-2 text-xs font-medium text-slate-500">{opt.desc}</span>
+                    <span className="mt-2 text-xs font-medium text-slate-500 leading-relaxed">{opt.desc}</span>
                   </button>
                 ))}
               </div>

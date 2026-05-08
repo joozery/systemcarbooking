@@ -17,7 +17,7 @@ export function AboutUs() {
         <div className="relative flex-1 group">
           <div className="relative z-10 overflow-hidden rounded-2xl shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
             <Image 
-              src="/cover/cover.png" 
+              src="/coveabot.png" 
               alt="About Crown Wealth" 
               width={800} 
               height={600} 

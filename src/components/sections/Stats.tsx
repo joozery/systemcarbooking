@@ -11,8 +11,12 @@ const stats = [
 
 export function Stats() {
   return (
-    <section className="mt-8 lg:mt-12 overflow-hidden rounded-2xl lg:rounded-3xl bg-gradient-to-br from-[#001A3D] via-[#001A3D] to-[#0047AB] text-white shadow-2xl shadow-[#001A3D]/30 border border-white/5">
-      <div className="flex flex-col lg:flex-row">
+    <section className="relative overflow-hidden bg-[#001A3D] text-white border-y border-white/5">
+      {/* Background Gradient Layer */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#001A3D] via-[#001A3D] to-[#0047AB] opacity-95" />
+      
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row">
         {/* Left CTA */}
         <div className="flex flex-col lg:flex-[0.8] justify-center p-8 lg:p-12 relative overflow-hidden">
           {/* Subtle Background Glow */}
@@ -46,6 +50,7 @@ export function Stats() {
               <div className="mt-1 text-[9px] lg:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-300">{stat.label}</div>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </section>
