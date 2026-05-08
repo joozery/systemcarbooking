@@ -107,12 +107,35 @@ export default function BookingTrackPage() {
   const currentStepIndex = steps.findIndex(s => s.id === status);
 
   return (
-    <div className="min-h-screen bg-slate-50 font-noto-thai overflow-hidden flex flex-col lg:flex-row">
+    <div className="h-screen bg-slate-50 font-noto-thai overflow-hidden flex flex-col lg:flex-row">
       
-      {/* Left Panel: Status & Details */}
-      <div className="w-full lg:w-[450px] bg-white shadow-2xl z-20 flex flex-col h-screen overflow-y-auto no-scrollbar border-r border-slate-100">
+      {/* Map Section: Always visible on mobile (Top) and desktop (Right) */}
+      <div className="w-full h-[40vh] lg:h-full lg:flex-1 relative z-10 order-1 lg:order-2">
+         <div ref={mapContainer} className="absolute inset-0 w-full h-full" />
+         
+         {/* Map Overlays */}
+         <div className="absolute top-4 lg:top-8 right-4 lg:right-8 z-30 flex flex-col gap-2">
+            <button className="h-10 w-10 flex items-center justify-center rounded-xl bg-white shadow-xl text-[#001A3D] hover:bg-slate-50 transition-all"><Navigation className="h-5 w-5" /></button>
+         </div>
+
+         <AnimatePresence>
+           {status === "requested" && (
+             <motion.div exit={{ opacity: 0 }} className="absolute inset-0 z-40 bg-[#001A3D]/10 backdrop-blur-[2px] flex items-center justify-center">
+                <div className="bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
+                   <div className="h-10 w-10 rounded-xl bg-[#0047AB] flex items-center justify-center"><Clock className="h-5 w-5 text-white animate-spin-slow" /></div>
+                   <div>
+                      <div className="text-xs font-black text-[#001A3D]">กำลังจับคู่...</div>
+                   </div>
+                </div>
+             </motion.div>
+           )}
+         </AnimatePresence>
+      </div>
+
+      {/* Status Panel: Below map on mobile, Side panel on desktop */}
+      <div className="w-full lg:w-[450px] bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.1)] lg:shadow-2xl z-20 flex flex-col h-[60vh] lg:h-screen overflow-y-auto no-scrollbar border-t lg:border-t-0 lg:border-r border-slate-100 order-2 lg:order-1">
         <div className="p-6 md:p-8 flex-1">
-          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#001A3D] transition-colors mb-10">
+          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#001A3D] transition-colors mb-6 lg:mb-10">
              <div className="h-6 w-6 flex items-center justify-center rounded-lg bg-slate-100"><ChevronRight className="h-3 w-3 rotate-180" /></div>
              Back to Home
           </Link>
@@ -201,30 +224,6 @@ export default function BookingTrackPage() {
         </div>
       </div>
 
-      {/* Right Panel: Full Screen Map */}
-      <div className="flex-1 relative z-10 h-[50vh] lg:h-screen">
-         <div ref={mapContainer} className="absolute inset-0 w-full h-full" />
-         
-         {/* Map Overlays */}
-         <div className="absolute top-8 right-8 z-30 flex flex-col gap-2">
-            <button className="h-10 w-10 flex items-center justify-center rounded-xl bg-white shadow-xl text-[#001A3D] hover:bg-slate-50 transition-all"><Navigation className="h-5 w-5" /></button>
-            <div className="h-24 w-1 bg-white/20 rounded-full mx-auto" />
-         </div>
-
-         <AnimatePresence>
-           {status === "requested" && (
-             <motion.div exit={{ opacity: 0 }} className="absolute inset-0 z-40 bg-[#001A3D]/10 backdrop-blur-[2px] flex items-center justify-center">
-                <div className="bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
-                   <div className="h-10 w-10 rounded-xl bg-[#0047AB] flex items-center justify-center"><Clock className="h-5 w-5 text-white animate-spin-slow" /></div>
-                   <div>
-                      <div className="text-xs font-black text-[#001A3D]">กำลังจับคู่พาร์ทเนอร์...</div>
-                      <div className="text-[10px] font-medium text-slate-500">คาดว่าพาร์ทเนอร์จะรับงานภายใน 2 นาที</div>
-                   </div>
-                </div>
-             </motion.div>
-           )}
-         </AnimatePresence>
-      </div>
 
       <AnimatePresence>
         {showPayment && (
