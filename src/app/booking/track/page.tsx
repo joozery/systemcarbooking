@@ -110,7 +110,7 @@ export default function BookingTrackPage() {
     <div className="min-h-screen bg-slate-50 font-noto-thai overflow-hidden flex flex-col lg:flex-row">
       
       {/* Left Panel: Status & Details */}
-      <div className="w-full lg:w-[450px] bg-white shadow-2xl z-20 flex flex-col h-screen overflow-y-auto border-r border-slate-100">
+      <div className="w-full lg:w-[450px] bg-white shadow-2xl z-20 flex flex-col h-screen overflow-y-auto no-scrollbar border-r border-slate-100">
         <div className="p-6 md:p-8 flex-1">
           <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#001A3D] transition-colors mb-10">
              <div className="h-6 w-6 flex items-center justify-center rounded-lg bg-slate-100"><ChevronRight className="h-3 w-3 rotate-180" /></div>
@@ -282,6 +282,8 @@ export default function BookingTrackPage() {
       </AnimatePresence>
 
       <style dangerouslySetInnerHTML={{__html: `
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .animate-spin-slow { animation: spin 4s linear infinite; }
         .animate-bounce-slow { animation: bounce 3s infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
