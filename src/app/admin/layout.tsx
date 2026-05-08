@@ -4,7 +4,8 @@ import { useState } from "react";
 import { 
   LayoutDashboard, Car, Users, Settings, Bell, Search, 
   LogOut, ShieldAlert, BarChart3, HelpCircle, 
-  PanelLeftClose, PanelLeftOpen, ChevronDown, CheckCircle2, Clock
+  PanelLeftClose, PanelLeftOpen, ChevronDown, CheckCircle2, Clock,
+  CreditCard, Users2, ShieldCheck, History
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,9 +18,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "แดชบอร์ด", href: "/admin", icon: LayoutDashboard },
     { name: "จัดการงาน", href: "/admin/jobs", icon: Car },
     { name: "จัดการพาร์ทเนอร์", href: "/admin/vendors", icon: Users },
+    { name: "จัดการผู้ใช้งาน", href: "/admin/users", icon: Users2 },
+    { name: "การเงิน", href: "/admin/finance", icon: CreditCard },
   ];
 
   const secondaryNavItems = [
+    { name: "ทีมงาน", href: "/admin/staff", icon: ShieldCheck },
+    { name: "บันทึกกิจกรรม", href: "/admin/logs", icon: History },
     { name: "รายงานและสถิติ", href: "#", icon: BarChart3 },
     { name: "เรื่องร้องเรียน", href: "#", icon: ShieldAlert },
     { name: "ตั้งค่าระบบ", href: "/admin/settings", icon: Settings },
@@ -38,8 +43,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Brand/Logo Area */}
         <div className="flex h-[70px] items-center px-5 border-b border-white/5 bg-[#001430]/50">
           <div className="flex items-center gap-3 w-full">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#0047AB] to-blue-400 shadow-lg border border-blue-400/30">
-              <span className="text-lg font-black text-white">C</span>
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white shadow-lg border border-blue-400/30 p-1">
+              <img src="/logo/logocrown.svg" alt="Logo" className="h-full w-full object-contain" />
             </div>
             
             {!isCollapsed && (

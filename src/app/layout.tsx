@@ -12,7 +12,13 @@ const notoTh = Noto_Sans_Thai({
 export const metadata: Metadata = {
   title: "Crown Wealth - เชื่อมต่อทุกการเดินทาง มั่นใจทุกบริการ",
   description: "แพลตฟอร์มเรียกรถบรรทุกและรถลากจูง ที่พร้อมดูแลคุณตลอด 24 ชั่วโมง",
+  icons: {
+    icon: "/logo/logocrownbrowser.png",
+    apple: "/logo/logocrownbrowser.png",
+  },
 };
+
+import { CookieConsent } from "@/components/layout/CookieConsent";
 
 export default function RootLayout({
   children,
@@ -24,7 +30,10 @@ export default function RootLayout({
       <head>
         <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
       </head>
-      <body className="min-h-full font-sans" suppressHydrationWarning>{children}</body>
+      <body className="min-h-full font-sans" suppressHydrationWarning>
+        {children}
+        <CookieConsent />
+      </body>
     </html>
   );
 }

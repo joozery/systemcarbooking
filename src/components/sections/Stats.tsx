@@ -11,39 +11,39 @@ const stats = [
 
 export function Stats() {
   return (
-    <section className="mt-12 overflow-hidden rounded-3xl bg-gradient-to-br from-[#001A3D] via-[#001A3D] to-[#0047AB] text-white shadow-2xl shadow-[#001A3D]/30 border border-white/5">
+    <section className="mt-8 lg:mt-12 overflow-hidden rounded-2xl lg:rounded-3xl bg-gradient-to-br from-[#001A3D] via-[#001A3D] to-[#0047AB] text-white shadow-2xl shadow-[#001A3D]/30 border border-white/5">
       <div className="flex flex-col lg:flex-row">
         {/* Left CTA */}
-        <div className="flex flex-[0.8] flex-col justify-center p-10 lg:p-12 relative overflow-hidden">
+        <div className="flex flex-col lg:flex-[0.8] justify-center p-8 lg:p-12 relative overflow-hidden">
           {/* Subtle Background Glow */}
           <div className="absolute -top-24 -left-24 h-48 w-48 rounded-full bg-blue-500/10 blur-[80px]" />
           
-          <div className="relative z-10 flex items-center gap-6">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md shadow-xl">
-               <Crown className="h-9 w-9 text-white" fill="currentColor" />
+          <div className="relative z-10 flex flex-col sm:flex-row items-center lg:items-start text-center lg:text-left gap-6">
+            <div className="flex h-14 w-14 lg:h-16 lg:w-16 shrink-0 items-center justify-center rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md shadow-xl">
+               <Crown className="h-7 w-7 lg:h-9 lg:w-9 text-white" fill="currentColor" />
             </div>
             <div>
-              <h2 className="text-2xl font-black tracking-tight leading-tight">พร้อมให้บริการคุณ 24 ชั่วโมง</h2>
-              <p className="mt-2 text-sm font-medium text-slate-300 opacity-80">เราพร้อมดูแลคุณในทุกเส้นทาง ด้วยทีมงานมืออาชีพและรถคุณภาพ</p>
+              <h2 className="text-xl lg:text-2xl font-black tracking-tight leading-tight">พร้อมให้บริการคุณ 24 ชั่วโมง</h2>
+              <p className="mt-2 text-xs lg:text-sm font-medium text-slate-300 opacity-80">เราพร้อมดูแลคุณในทุกเส้นทาง ด้วยทีมงานมืออาชีพและรถคุณภาพ</p>
             </div>
           </div>
-          <div className="relative z-10 mt-10 flex gap-4">
-            <button className="flex items-center gap-3 rounded-xl bg-white px-8 py-3.5 text-xs font-black text-[#001A3D] transition-all hover:bg-slate-100 active:scale-95 shadow-lg shadow-white/5">
+          <div className="relative z-10 mt-8 lg:mt-10 flex flex-col sm:flex-row gap-3 lg:gap-4">
+            <button className="flex items-center justify-center gap-3 rounded-xl bg-white px-8 py-3.5 text-xs font-black text-[#001A3D] transition-all hover:bg-slate-100 active:scale-95 shadow-lg shadow-white/5">
               <Phone className="h-4 w-4" /> ติดต่อเรา
             </button>
-            <button className="flex items-center gap-3 rounded-xl border border-white/20 bg-white/5 px-8 py-3.5 text-xs font-black transition-all hover:bg-white/10 active:scale-95">
+            <button className="flex items-center justify-center gap-3 rounded-xl border border-white/20 bg-white/5 px-8 py-3.5 text-xs font-black transition-all hover:bg-white/10 active:scale-95">
               <Zap className="h-4 w-4 fill-current" /> แชทกับเรา
             </button>
           </div>
         </div>
 
         {/* Right Stats Grid */}
-        <div className="flex flex-1 items-center gap-3 bg-white/[0.03] p-4 lg:p-6 backdrop-blur-sm">
+        <div className="flex-1 grid grid-cols-2 lg:flex items-stretch bg-white/[0.05] backdrop-blur-sm border-t lg:border-t-0 lg:border-l border-white/10 overflow-hidden">
           {stats.map((stat, i) => (
-            <div key={i} className="group flex flex-1 flex-col items-center justify-center rounded-2xl border border-white/[0.05] bg-white/[0.02] py-10 text-center transition-all duration-500 hover:bg-white/[0.08] hover:border-white/10 hover:-translate-y-1">
-              <stat.icon className="mb-4 h-8 w-8 text-[#0047AB] transition-colors group-hover:text-white" />
-              <div className="text-2xl font-black tracking-tight">{stat.value}</div>
-              <div className="mt-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-300">{stat.label}</div>
+            <div key={i} className="group flex flex-1 flex-col items-center justify-center bg-[#001A3D]/40 py-8 lg:py-10 text-center transition-all duration-500 hover:bg-white/[0.08] border-r border-b lg:border-b-0 border-white/5 last:border-0">
+              <stat.icon className="mb-3 h-6 w-6 lg:h-8 lg:w-8 text-[#0047AB] transition-colors group-hover:text-white" />
+              <div className="text-xl lg:text-2xl font-black tracking-tight">{stat.value}</div>
+              <div className="mt-1 text-[9px] lg:text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-300">{stat.label}</div>
             </div>
           ))}
         </div>

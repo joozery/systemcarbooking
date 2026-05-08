@@ -13,11 +13,13 @@ export function Footer() {
           
           {/* Brand Section */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center text-white">
-                <Crown className="h-8 w-8" fill="currentColor" />
-              </div>
-              <span className="text-xl font-black tracking-tighter uppercase">Crown Wealth</span>
+            <Link href="/" className="flex items-center gap-3">
+              <img 
+                src="/logo/logocrown.svg" 
+                alt="Crown Wealth Logo" 
+                className="h-10 w-auto object-contain brightness-0 invert" 
+              />
+              <span className="text-xl font-black tracking-tighter uppercase text-white">Crown Wealth</span>
             </Link>
             <p className="text-blue-100/60 text-sm leading-relaxed max-w-xs">
               ผู้ให้บริการรถสไลด์และบริการช่วยเหลือฉุกเฉินบนท้องถนนระดับพรีเมียม 
@@ -87,9 +89,9 @@ export function Footer() {
             © {currentYear} CROWN WEALTH OPERATIONS. ALL RIGHTS RESERVED.
           </p>
           <div className="flex items-center gap-8 text-[10px] font-bold text-blue-100/40 uppercase tracking-widest">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Cookies Settings</a>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="/cookies/settings" className="hover:text-white transition-colors">Cookies Settings</Link>
           </div>
         </div>
 

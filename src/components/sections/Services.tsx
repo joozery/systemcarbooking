@@ -68,7 +68,7 @@ export function Services() {
             <span className="mb-4 inline-block rounded-full bg-blue-50 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-blue-600">
               Our Premium Services
             </span>
-            <h2 className="text-4xl font-black tracking-tight text-[#001A3D] md:text-5xl lg:text-6xl">
+            <h2 className="text-3xl font-black tracking-tight text-[#001A3D] sm:text-4xl md:text-5xl lg:text-6xl">
               บริการที่ครอบคลุม<span className="text-blue-600">ทุกความต้องการ</span>
             </h2>
             <div className="mt-6 h-1 w-24 rounded-full bg-blue-600/20 mx-auto" />
