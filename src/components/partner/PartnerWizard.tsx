@@ -116,17 +116,27 @@ export function PartnerWizard() {
                 <label className="text-xs font-black uppercase tracking-wider text-slate-500">ประเภทรถที่ใช้รับงาน</label>
                 <div className="grid grid-cols-2 gap-4">
                   {[
-                    { type: "รถลากจูง", desc: "สำหรับลากจูงรถเสีย" },
-                    { type: "รถบรรทุก", desc: "สไลด์ออน, รถยก" }
+                    { type: "รถลากจูง", image: "/car/larh.png", desc: "สำหรับลากจูงรถเสีย" },
+                    { type: "รถบรรทุก", image: "/car/truck.png", desc: "สไลด์ออน, รถยก" }
                   ].map((v) => (
                     <button 
                       key={v.type}
                       onClick={() => updateData("vehicleType", v.type)}
-                      className={`flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all ${data.vehicleType === v.type ? "border-[#0047AB] bg-blue-50 text-[#001A3D]" : "border-slate-200 bg-white text-slate-400 hover:border-[#0047AB]/30"}`}
+                      className={`group flex flex-col items-center justify-center p-6 rounded-2xl border-2 transition-all duration-300 ${
+                        data.vehicleType === v.type ? "border-[#0047AB] bg-white ring-4 ring-[#0047AB]/5" : "border-slate-200 bg-white hover:border-[#0047AB]/30"
+                      }`}
                     >
-                      <Truck className={`h-10 w-10 mb-3 ${data.vehicleType === v.type ? "text-[#0047AB]" : ""}`} />
-                      <span className="font-bold">{v.type}</span>
-                      <span className="text-[10px] mt-1 font-medium">{v.desc}</span>
+                      <div className="relative mb-4 flex h-32 w-full items-center justify-center transition-all duration-500 group-hover:scale-110">
+                        <img 
+                          src={v.image} 
+                          alt={v.type}
+                          className="h-full w-full object-contain drop-shadow-xl"
+                        />
+                      </div>
+                      <span className={`font-bold transition-colors ${data.vehicleType === v.type ? "text-[#0047AB]" : "text-[#001A3D]"}`}>
+                        {v.type}
+                      </span>
+                      <span className="text-[10px] mt-1 font-medium text-slate-500">{v.desc}</span>
                     </button>
                   ))}
                 </div>

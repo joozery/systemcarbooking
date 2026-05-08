@@ -15,7 +15,8 @@ import {
   Navigation,
   Image as ImageIcon,
   ChevronRight,
-  AlertCircle
+  AlertCircle,
+  X
 } from "lucide-react";
 import Link from "next/link";
 
@@ -34,14 +35,10 @@ export default function BookingTrackPage() {
   useEffect(() => {
     const timer1 = setTimeout(() => setStatus("assigned"), 3000);
     const timer2 = setTimeout(() => setStatus("arriving"), 8000);
-    const timer3 = setTimeout(() => setStatus("on_site"), 15000);
-    const timer4 = setTimeout(() => setStatus("payment_pending"), 22000);
     
     return () => { 
       clearTimeout(timer1); 
       clearTimeout(timer2); 
-      clearTimeout(timer3);
-      clearTimeout(timer4);
     };
   }, []);
 
@@ -54,44 +51,33 @@ export default function BookingTrackPage() {
                 container: mapContainer.current,
                 style: "mapbox://styles/mapbox/light-v11",
                 center: customerLoc,
-                zoom: 13,
+                zoom: 14,
                 pitch: 45,
             });
 
             new mapboxgl.Marker({ color: "#0047AB" })
                 .setLngLat(customerLoc)
-                .setPopup(new mapboxgl.Popup().setHTML("<b class='font-noto-thai'>จุดรับรถของคุณ</b>"))
                 .addTo(_sys_m.current);
 
             const el = document.createElement("div");
             el.className = "driver-marker";
-            el.innerHTML = `<div class="bg-[#001A3D] p-2 rounded-lg shadow-xl border-2 border-white text-white"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3m15 0h2v-3.34a4 4 0 0 0-1.17-2.83L19 13h-4"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/></svg></div>`;
+            el.innerHTML = `<div class="bg-[#001A3D] p-1.5 rounded-full shadow-2xl border-2 border-white text-white animate-bounce-slow"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h4V5H2v12h3m15 0h2v-3.34a4 4 0 0 0-1.17-2.83L19 13h-4"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/></svg></div>`;
 
             _sys_mk_driver.current = new mapboxgl.Marker(el)
                 .setLngLat(driverLoc)
                 .addTo(_sys_m.current);
 
-            (window as any).map = _sys_m.current;
-            (window as any).marker = _sys_mk_driver.current;
-            (window as any).mapboxgl = mapboxgl;
-
             _sys_m.current.on('load', () => {
                 _sys_m.current?.resize();
             });
         } catch (err) {
-            console.error("Mapbox track page error:", err);
+            console.error("Mapbox track error:", err);
         }
     }, 200);
 
     return () => {
       clearTimeout(timer);
-      if (_sys_m.current) {
-        _sys_m.current.remove();
-        _sys_m.current = null;
-      }
-      delete (window as any).map;
-      delete (window as any).marker;
-      delete (window as any).mapboxgl;
+      if (_sys_m.current) _sys_m.current.remove();
     };
   }, []);
 
@@ -111,205 +97,168 @@ export default function BookingTrackPage() {
   }, [status]);
 
   const steps = [
-    { id: "requested", label: "รับคำขอแล้ว", desc: "กำลังรอเจ้าหน้าที่ตรวจสอบงาน" },
-    { id: "assigned", label: "ได้รับพาร์ทเนอร์แล้ว", desc: "คุณสมชาย ใจดี กำลังเตรียมตัวเดินทาง" },
-    { id: "arriving", label: "กำลังเดินทาง", desc: "รถสไลด์กำลังมุ่งหน้าไปหาคุณ" },
-    { id: "on_site", label: "ถึงจุดเกิดเหตุ", desc: "พาร์ทเนอร์กำลังดำเนินการช่วยเหลือคุณ" },
-    { id: "payment_pending", label: "รอชำระเงิน", desc: "กรุณาชำระเงินเพื่อยืนยันการปิดงาน" },
-    { id: "completed", label: "เสร็จสิ้น", desc: "ขอบคุณที่ใช้บริการ Crown Wealth" },
+    { id: "requested", label: "รับคำขอแล้ว", time: "10:45" },
+    { id: "assigned", label: "ได้รับพาร์ทเนอร์", time: "10:48" },
+    { id: "arriving", label: "กำลังเดินทาง", time: "10:52" },
+    { id: "on_site", label: "ถึงจุดเกิดเหตุ", time: "--:--" },
+    { id: "completed", label: "เสร็จสิ้น", time: "--:--" },
   ];
 
   const currentStepIndex = steps.findIndex(s => s.id === status);
 
   return (
-    <div className="min-h-screen bg-slate-50 font-noto-thai">
-      <header className="sticky top-0 z-50 bg-[#001A3D] text-white p-4 flex items-center justify-between">
-        <Link href="/" className="text-sm font-bold opacity-70 hover:opacity-100 transition-opacity">← กลับหน้าหลัก</Link>
-        <span className="font-black tracking-widest text-xs uppercase">Tracking ID: CW-1042</span>
-        <div className="w-12"></div>
-      </header>
+    <div className="min-h-screen bg-slate-50 font-noto-thai overflow-hidden flex flex-col lg:flex-row">
+      
+      {/* Left Panel: Status & Details */}
+      <div className="w-full lg:w-[450px] bg-white shadow-2xl z-20 flex flex-col h-screen overflow-y-auto border-r border-slate-100">
+        <div className="p-6 md:p-8 flex-1">
+          <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-[#001A3D] transition-colors mb-10">
+             <div className="h-6 w-6 flex items-center justify-center rounded-lg bg-slate-100"><ChevronRight className="h-3 w-3 rotate-180" /></div>
+             Back to Home
+          </Link>
 
-      <main className="max-w-6xl mx-auto p-6 lg:p-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
-        <div className="lg:col-span-2 space-y-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="rounded-lg bg-white p-10 shadow-2xl shadow-[#001A3D]/5 border border-slate-100">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-blue-500 blur-xl opacity-20 animate-pulse"></div>
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-lg bg-[#0047AB] text-white shadow-lg">
-                  {status === "requested" ? <Clock className="animate-spin-slow h-7 w-7" /> : <Truck className="h-7 w-7" />}
-                </div>
-              </div>
-              <div>
-                <h1 className="text-2xl font-black text-[#001A3D]">{steps[Math.max(0, currentStepIndex)].label}</h1>
-                <p className="text-sm font-medium text-slate-500">{steps[Math.max(0, currentStepIndex)].desc}</p>
-              </div>
-            </div>
-
-            <div className="relative h-[400px] w-full rounded-lg bg-slate-100 overflow-hidden border border-slate-200 shadow-inner">
-               <div ref={mapContainer} className="absolute inset-0 w-full h-full" />
-               <AnimatePresence>
-                 {status === "requested" && (
-                   <motion.div exit={{ opacity: 0 }} className="absolute inset-0 z-10 flex items-center justify-center bg-slate-50/50 backdrop-blur-[2px]">
-                      <div className="text-slate-500 text-sm font-bold flex flex-col items-center gap-2">
-                        <Navigation className="h-8 w-8 text-blue-500 animate-pulse" />
-                        กำลังระบุตำแหน่งรถช่วยเหลือ...
-                      </div>
-                   </motion.div>
-                 )}
-               </AnimatePresence>
-            </div>
-          </motion.div>
-
-          <div className="rounded-lg bg-white p-10 shadow-2xl shadow-[#001A3D]/5 border border-slate-100">
-            <h3 className="text-xl font-black text-[#001A3D] mb-10">สถานะการดำเนินการ</h3>
-            <div className="space-y-10 relative">
-              <div className="absolute left-[15px] top-2 bottom-2 w-0.5 bg-slate-100"></div>
-              {steps.slice(0, 6).map((s, i) => (
-                <div key={s.id} className="relative flex items-start gap-8 pl-0">
-                  <div className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 border-white shadow-md transition-all duration-500 ${
-                    currentStepIndex >= i ? "bg-[#0047AB] text-white scale-110" : "bg-slate-200 text-slate-400"
-                  }`}>
-                    {currentStepIndex > i ? <CheckCircle2 className="h-5 w-5" /> : <div className="h-2.5 w-2.5 rounded-full bg-current" />}
-                  </div>
-                  <div className={`${currentStepIndex >= i ? "opacity-100" : "opacity-40"}`}>
-                    <div className="text-lg font-black text-[#001A3D]">{s.label}</div>
-                    <div className="text-sm text-slate-500 mt-1">{s.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="mb-10">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#0047AB] bg-blue-50 px-3 py-1 rounded-full">Order ID: CW-1042</span>
+            <h1 className="mt-4 text-3xl font-black text-[#001A3D]">กำลังติดตามบริการ</h1>
+            <p className="mt-2 text-sm font-medium text-slate-500">พาร์ทเนอร์กำลังเดินทางไปหาคุณในขณะนี้</p>
           </div>
-        </div>
 
-        <div className="space-y-8">
+          {/* Stepper Vertical */}
+          <div className="space-y-6 relative mb-12">
+            <div className="absolute left-[13px] top-2 bottom-2 w-[2px] bg-slate-100">
+               <motion.div 
+                 initial={{ height: 0 }} 
+                 animate={{ height: `${(currentStepIndex / (steps.length - 1)) * 100}%` }} 
+                 className="w-full bg-[#0047AB] transition-all duration-1000"
+               />
+            </div>
+            {steps.map((s, i) => (
+              <div key={s.id} className="relative flex items-center gap-6 group">
+                <div className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 transition-all duration-500 ${
+                  currentStepIndex >= i ? "bg-[#0047AB] border-[#0047AB] text-white shadow-lg shadow-blue-200" : "bg-white border-slate-200 text-slate-300"
+                }`}>
+                  {currentStepIndex > i ? <CheckCircle2 className="h-4 w-4" /> : <div className={`h-1.5 w-1.5 rounded-full ${currentStepIndex === i ? "bg-white animate-pulse" : "bg-current"}`} />}
+                </div>
+                <div className="flex-1 flex justify-between items-center">
+                   <span className={`text-sm font-black transition-colors ${currentStepIndex >= i ? "text-[#001A3D]" : "text-slate-300"}`}>{s.label}</span>
+                   <span className="text-[10px] font-bold text-slate-400">{s.time}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Partner Card */}
           <AnimatePresence>
             {currentStepIndex >= 1 && (
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="rounded-lg bg-[#001A3D] p-10 text-white shadow-2xl shadow-[#001A3D]/20">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-blue-300/60 mb-4">พาร์ทเนอร์ที่ดูแลคุณ</h3>
-                <div className="flex items-center gap-4">
-                  <div className="h-16 w-16 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center"><User className="h-8 w-8" /></div>
-                  <div>
-                    <div className="font-bold text-lg leading-none">สมชาย ใจดี</div>
-                    <div className="text-xs font-medium text-blue-200 mt-1">รถสไลด์ • ทะเบียน 1ขธ 4422</div>
-                    <div className="mt-3 flex items-center gap-2">
-                      <button className="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg active:scale-95 transition-transform"><Phone className="h-4 w-4 fill-current" /></button>
-                      <button className="rounded-full bg-white/10 px-4 py-2 text-[10px] font-bold border border-white/5 hover:bg-white/20 transition-all">ส่งข้อความ</button>
-                    </div>
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-8 rounded-2xl bg-[#001A3D] p-6 text-white shadow-xl shadow-blue-900/20 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity"><Truck className="h-16 w-16" /></div>
+                <div className="flex items-center gap-4 relative z-10">
+                  <div className="h-12 w-12 rounded-xl bg-white/10 flex items-center justify-center border border-white/5 shadow-inner"><User className="h-6 w-6 text-blue-200" /></div>
+                  <div className="flex-1">
+                    <div className="text-[10px] font-black uppercase tracking-wider text-blue-300/60">Professional Partner</div>
+                    <div className="font-bold text-base mt-0.5">สมชาย ใจดี</div>
+                    <div className="text-[10px] font-medium text-blue-200/80">รถสไลด์ • ทะเบียน 1ขธ 4422</div>
                   </div>
+                </div>
+                <div className="mt-6 flex gap-2 relative z-10">
+                   <button className="flex-1 rounded-xl bg-white py-3 text-xs font-black text-[#001A3D] flex items-center justify-center gap-2 hover:bg-slate-50 transition-all"><Phone className="h-3.5 w-3.5" /> โทรหาช่าง</button>
+                   <button className="h-10 w-10 flex items-center justify-center rounded-xl bg-white/10 border border-white/5 hover:bg-white/20 transition-all"><ImageIcon className="h-4 w-4" /></button>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
-          <div className="rounded-lg bg-white p-10 shadow-2xl shadow-[#001A3D]/5 border border-slate-100 overflow-hidden relative">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-50 text-amber-600 shadow-sm"><CreditCard className="h-6 w-6" /></div>
-              <h3 className="text-xl font-black text-[#001A3D]">สรุปค่าใช้จ่าย</h3>
-            </div>
-            {status !== "payment_pending" && status !== "completed" ? (
-              <div className="text-center py-10">
-                <div className="flex justify-center mb-6"><AlertCircle className="h-12 w-12 text-slate-200" /></div>
-                <p className="text-sm font-bold text-slate-400 leading-relaxed">รอเจ้าหน้าที่ประเมินค่าบริการ<br/>หลังจากรถถึงที่หมาย</p>
-              </div>
-            ) : (
-              <div className="space-y-5">
-                <div className="flex justify-between items-center py-4 border-b border-dashed border-slate-100"><span className="text-slate-500 font-medium">ค่าบริการเริ่มต้น</span><span className="font-bold text-lg">1,500.-</span></div>
-                <div className="flex justify-between items-center py-4 border-b border-dashed border-slate-100"><span className="text-slate-500 font-medium">ส่วนต่างระยะทาง (12 กม.)</span><span className="font-bold text-lg">600.-</span></div>
-                <div className="flex justify-between items-center pt-4"><span className="text-lg font-black text-[#001A3D]">ยอดชำระรวม</span><span className="text-3xl font-black text-[#0047AB]">2,100.-</span></div>
-                <button onClick={() => setShowPayment(true)} className="w-full mt-6 rounded-lg bg-[#0047AB] py-5 font-black text-white shadow-2xl shadow-blue-500/30 hover:bg-[#003580] hover:scale-[1.02] active:scale-95 transition-all">ชำระเงินทันที</button>
-              </div>
-            )}
-          </div>
-
-          <div className="rounded-lg bg-slate-50 p-10 border border-slate-100">
-            <div className="text-xs font-black text-[#001A3D] uppercase tracking-wider mb-4">มีปัญหาในการรับบริการ?</div>
-            <p className="text-sm text-slate-500 leading-relaxed mb-8">หากพาร์ทเนอร์ล่าช้าเกิน 30 นาที หรือเกิดความผิดพลาดใดๆ กรุณาติดต่อ Call Center ตลอด 24 ชม.</p>
-            <button className="flex w-full items-center justify-between rounded-lg bg-white px-6 py-4 text-sm font-bold text-[#001A3D] shadow-sm border border-slate-100 hover:border-blue-200 hover:shadow-md transition-all">ติดต่อเจ้าหน้าที่ 1122 <ChevronRight className="h-5 w-5 text-blue-500" /></button>
+          {/* Pricing Info */}
+          <div className="rounded-2xl border-2 border-slate-100 p-6 bg-slate-50/50">
+             <div className="flex justify-between items-center mb-4">
+                <span className="text-xs font-black text-[#001A3D] uppercase tracking-wider">สรุปค่าบริการ</span>
+                <button className="text-[10px] font-bold text-[#0047AB] hover:underline">ดูรายละเอียด</button>
+             </div>
+             {status !== "payment_pending" ? (
+               <div className="flex items-center gap-3 p-3 rounded-xl bg-blue-50 border border-blue-100 text-[#0047AB]">
+                  <Clock className="h-4 w-4 animate-pulse" />
+                  <span className="text-[11px] font-bold">รอประเมินค่าบริการเมื่อถึงที่หมาย</span>
+               </div>
+             ) : (
+               <div className="space-y-2">
+                 <div className="flex justify-between text-xs font-medium text-slate-500"><span>ค่าบริการคงที่</span><span>1,500.-</span></div>
+                 <div className="flex justify-between text-sm font-black text-[#001A3D] pt-2 border-t border-slate-200"><span>รวมสุทธิ</span><span>2,100.-</span></div>
+                 <button onClick={() => setShowPayment(true)} className="w-full mt-4 rounded-xl bg-[#0047AB] py-4 text-xs font-black text-white shadow-lg shadow-blue-200">ชำระเงินทันที</button>
+               </div>
+             )}
           </div>
         </div>
-      </main>
+
+        {/* Panel Footer */}
+        <div className="p-8 border-t border-slate-100 bg-slate-50/30">
+           <div className="flex items-center gap-3">
+              <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-white shadow-sm text-red-500"><AlertCircle className="h-5 w-5" /></div>
+              <div className="flex-1">
+                 <div className="text-[11px] font-black text-[#001A3D]">ต้องการความช่วยเหลือด่วน?</div>
+                 <div className="text-[10px] font-medium text-slate-400">Call Center: 1122 (24 ชม.)</div>
+              </div>
+           </div>
+        </div>
+      </div>
+
+      {/* Right Panel: Full Screen Map */}
+      <div className="flex-1 relative z-10 h-[50vh] lg:h-screen">
+         <div ref={mapContainer} className="absolute inset-0 w-full h-full" />
+         
+         {/* Map Overlays */}
+         <div className="absolute top-8 right-8 z-30 flex flex-col gap-2">
+            <button className="h-10 w-10 flex items-center justify-center rounded-xl bg-white shadow-xl text-[#001A3D] hover:bg-slate-50 transition-all"><Navigation className="h-5 w-5" /></button>
+            <div className="h-24 w-1 bg-white/20 rounded-full mx-auto" />
+         </div>
+
+         <AnimatePresence>
+           {status === "requested" && (
+             <motion.div exit={{ opacity: 0 }} className="absolute inset-0 z-40 bg-[#001A3D]/10 backdrop-blur-[2px] flex items-center justify-center">
+                <div className="bg-white/90 backdrop-blur-md px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
+                   <div className="h-10 w-10 rounded-xl bg-[#0047AB] flex items-center justify-center"><Clock className="h-5 w-5 text-white animate-spin-slow" /></div>
+                   <div>
+                      <div className="text-xs font-black text-[#001A3D]">กำลังจับคู่พาร์ทเนอร์...</div>
+                      <div className="text-[10px] font-medium text-slate-500">คาดว่าพาร์ทเนอร์จะรับงานภายใน 2 นาที</div>
+                   </div>
+                </div>
+             </motion.div>
+           )}
+         </AnimatePresence>
+      </div>
 
       <AnimatePresence>
         {showPayment && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowPayment(false)} className="absolute inset-0 bg-[#001A3D]/60 backdrop-blur-sm" />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl"
-            >
-              {/* Modal Header */}
-              <div className="bg-[#001A3D] px-8 py-6 text-white">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-black">ชำระค่าบริการ</h2>
-                  <button onClick={() => setShowPayment(false)} className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors">
-                    <AlertCircle className="h-5 w-5 rotate-45" />
-                  </button>
+            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="relative w-full max-w-lg overflow-hidden rounded-[32px] bg-white shadow-2xl">
+              <div className="bg-[#001A3D] px-8 py-8 text-white relative">
+                <div className="absolute top-0 right-0 p-4 opacity-10"><CreditCard className="h-24 w-24" /></div>
+                <div className="flex items-center justify-between relative z-10">
+                  <h2 className="text-2xl font-black">ชำระค่าบริการ</h2>
+                  <button onClick={() => setShowPayment(false)} className="rounded-xl bg-white/10 p-2 hover:bg-white/20 transition-colors"><X className="h-5 w-5" /></button>
+                </div>
+                <div className="mt-8 relative z-10">
+                   <div className="text-[11px] font-black uppercase tracking-widest text-blue-300/60 mb-2">ยอดชำระรวมสุทธิ</div>
+                   <div className="text-5xl font-black tracking-tighter">2,100 <span className="text-xl opacity-60">THB</span></div>
                 </div>
               </div>
-
-              <div className="p-8">
-                {/* Payment Summary Card */}
-                <div className="mb-8 rounded-xl bg-slate-50 p-6 border border-slate-100">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">ยอดรวมที่ต้องชำระ</span>
-                    <span className="text-xs font-bold text-[#0047AB] bg-blue-50 px-2 py-1 rounded">CW-1042</span>
-                  </div>
-                  <div className="text-4xl font-black text-[#001A3D]">2,100 <span className="text-lg">บาท</span></div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                  {/* QR Section */}
+              <div className="p-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                   <div className="flex flex-col items-center">
-                    <div className="relative group">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                      <div className="relative aspect-square w-full max-w-[180px] rounded-xl bg-white p-2 border border-slate-100 shadow-xl overflow-hidden flex items-center justify-center">
-                        <img 
-                          src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PROMPTPAY_MOCK_PAYMENT_2100_BAHT" 
-                          alt="PromptPay QR Code"
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
+                    <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100 shadow-inner">
+                      <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=PROMPTPAY" alt="QR" className="w-40 h-40" />
                     </div>
-                    <div className="mt-4 flex items-center gap-2">
-                       <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                       <p className="text-[10px] font-black text-slate-500 uppercase tracking-tight">
-                         Thai QR Payment Ready
-                       </p>
-                    </div>
-                    <p className="mt-2 text-[9px] font-medium text-slate-400 text-center leading-relaxed">
-                      สแกนผ่านแอปธนาคารของคุณ <br/>เพื่อชำระเงิน 2,100.-
-                    </p>
+                    <p className="mt-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Thai QR Payment</p>
                   </div>
-
-                  {/* Upload Section */}
-                  <div className="space-y-4">
-                    <div className="text-xs font-bold text-[#001A3D] mb-2">ยืนยันการโอนเงิน</div>
-                    <button className="group flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 py-8 transition-all hover:border-[#0047AB] hover:bg-blue-50/50">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm group-hover:text-[#0047AB] transition-colors">
-                        <ImageIcon className="h-6 w-6" />
-                      </div>
-                      <div className="text-center">
-                        <div className="text-xs font-black text-[#001A3D]">แนบสลิปที่นี่</div>
-                        <div className="text-[10px] font-medium text-slate-400 mt-1">ไฟล์ JPG, PNG ไม่เกิน 5MB</div>
-                      </div>
+                  <div className="space-y-6">
+                    <div className="text-xs font-black text-[#001A3D]">ยืนยันการโอนเงิน</div>
+                    <button className="group flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/30 py-8 transition-all hover:border-[#0047AB] hover:bg-blue-50/30">
+                      <ImageIcon className="h-6 w-6 text-slate-300 group-hover:text-[#0047AB]" />
+                      <div className="text-[10px] font-black text-slate-400">แนบสลิปที่นี่</div>
                     </button>
+                    <button onClick={() => { setStatus("completed"); setShowPayment(false); }} className="w-full rounded-xl bg-[#001A3D] py-4 text-sm font-black text-white shadow-xl shadow-blue-900/20 active:scale-95 transition-all">ยืนยันชำระเงิน</button>
                   </div>
                 </div>
-
-                <div className="mt-10 flex gap-4">
-                  <button 
-                    onClick={() => { setStatus("completed"); setShowPayment(false); }}
-                    className="flex-1 rounded-xl bg-[#001A3D] py-4 font-black text-white shadow-xl shadow-[#001A3D]/20 transition-all hover:bg-[#002a61] active:scale-95"
-                  >
-                    ยืนยันการชำระเงิน
-                  </button>
-                </div>
-
-                <p className="mt-6 text-center text-[10px] font-medium text-slate-400 italic">
-                  * หากพบปัญหาในการชำระเงิน กรุณาติดต่อฝ่ายบริการลูกค้า 1122
-                </p>
               </div>
             </motion.div>
           </div>
@@ -318,14 +267,14 @@ export default function BookingTrackPage() {
 
       <AnimatePresence>
         {status === "completed" && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[250] flex items-center justify-center bg-[#001A3D] p-6 text-white">
-            <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.2, type: "spring" }} className="flex flex-col items-center text-center max-w-sm">
-              <div className="mb-8 relative"><div className="absolute inset-0 bg-emerald-500 blur-3xl opacity-40 animate-pulse"></div><div className="relative h-24 w-24 rounded-full bg-emerald-500 flex items-center justify-center shadow-2xl"><CheckCircle2 className="h-12 w-12 text-white" /></div></div>
-              <h2 className="text-4xl font-black mb-4">ชำระเงินสำเร็จ!</h2>
-              <p className="text-blue-200 font-medium mb-10 leading-relaxed">ขอบคุณที่ไว้วางใจใช้บริการ Crown Wealth <br/>พาร์ทเนอร์ของเราได้ปฏิบัติงานเสร็จสิ้นแล้ว <br/>หวังว่าจะได้ดูแลคุณใหม่ในโอกาสหน้าครับ</p>
-              <div className="w-full space-y-4">
-                <Link href="/" className="block w-full rounded-lg bg-white py-4 font-black text-[#001A3D] shadow-xl transition-all hover:scale-[1.02] active:scale-95 text-center">กลับหน้าหลัก</Link>
-                <button className="text-sm font-bold text-blue-300/60 hover:text-white transition-colors">ดาวน์โหลดใบเสร็จ (PDF)</button>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[250] flex items-center justify-center bg-[#001A3D] p-6 text-white text-center">
+            <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="max-w-md">
+              <div className="h-24 w-24 rounded-full bg-emerald-500 mx-auto mb-8 flex items-center justify-center shadow-2xl shadow-emerald-500/40"><CheckCircle2 className="h-12 w-12 text-white" /></div>
+              <h2 className="text-4xl font-black mb-4 tracking-tight">ชำระเงินสำเร็จ</h2>
+              <p className="text-blue-200/80 font-medium mb-10 leading-relaxed">ขอบคุณที่เลือกใช้บริการ Crown Wealth <br/>พาร์ทเนอร์ของเราได้ปฏิบัติงานเสร็จสิ้นแล้ว</p>
+              <div className="space-y-4">
+                <Link href="/" className="block w-full rounded-2xl bg-white py-4 font-black text-[#001A3D] shadow-xl hover:scale-[1.02] active:scale-95 transition-all">กลับหน้าหลัก</Link>
+                <button className="text-[11px] font-black uppercase tracking-widest text-blue-300/40 hover:text-white transition-colors">Download Receipt (PDF)</button>
               </div>
             </motion.div>
           </motion.div>
@@ -333,8 +282,10 @@ export default function BookingTrackPage() {
       </AnimatePresence>
 
       <style dangerouslySetInnerHTML={{__html: `
-        .animate-spin-slow { animation: spin 3s linear infinite; }
+        .animate-spin-slow { animation: spin 4s linear infinite; }
+        .animate-bounce-slow { animation: bounce 3s infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
       `}} />
     </div>
   );
