@@ -25,8 +25,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const secondaryNavItems = [
     { name: "ทีมงาน", href: "/admin/staff", icon: ShieldCheck },
     { name: "บันทึกกิจกรรม", href: "/admin/logs", icon: History },
-    { name: "รายงานและสถิติ", href: "#", icon: BarChart3 },
-    { name: "เรื่องร้องเรียน", href: "#", icon: ShieldAlert },
+    { name: "รายงานและสถิติ", href: "/admin/reports", icon: BarChart3 },
+    { name: "เรื่องร้องเรียน", href: "/admin/complaints", icon: ShieldAlert },
     { name: "ตั้งค่าระบบ", href: "/admin/settings", icon: Settings },
   ];
 
