@@ -35,21 +35,28 @@ export function ContactUs() {
             </div>
 
             {/* Social Links */}
-            <div className="mt-12 flex flex-wrap gap-3">
-               {[
-                 { icon: Globe, href: "#" },
-                 { icon: MessageCircle, href: "#" },
-                 { icon: Share2, href: "#" },
-                 { icon: ThumbsUp, href: "#" }
-               ].map((social, i) => (
-                 <a 
-                   key={i} 
-                   href={social.href}
-                   className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors hover:bg-[#0047AB]"
-                 >
-                   <social.icon className="h-4 w-4 text-white" />
-                 </a>
-               ))}
+            <div className="mt-12">
+               <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-4">Social Media Channels</div>
+               <div className="flex flex-wrap gap-3">
+                  {[
+                    { label: "Line", icon: MessageCircle, color: "hover:bg-[#06C755]" },
+                    { label: "TikTok", icon: Globe, color: "hover:bg-black" },
+                    { label: "IG", icon: Camera, color: "hover:bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500" },
+                    { label: "Facebook", icon: ThumbsUp, color: "hover:bg-[#1877F2]" }
+                  ].map((social, i) => (
+                    <a 
+                      key={i} 
+                      href="#"
+                      className={`flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition-all ${social.color} hover:scale-110 active:scale-95`}
+                      title={social.label}
+                    >
+                      <social.icon className="h-4 w-4 text-white" />
+                    </a>
+                  ))}
+                  <a href="#" className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition-all hover:bg-black hover:scale-110 active:scale-95" title="X">
+                    <span className="text-xs font-black text-white">X</span>
+                  </a>
+               </div>
             </div>
           </div>
 

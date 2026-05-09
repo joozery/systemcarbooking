@@ -25,15 +25,21 @@ export function Footer() {
               ผู้ให้บริการรถสไลด์และบริการช่วยเหลือฉุกเฉินบนท้องถนนระดับพรีเมียม 
               ด้วยเครือข่ายพาร์ทเนอร์ที่ครอบคลุมทั่วประเทศ ตลอด 24 ชั่วโมง
             </p>
-            <div className="flex items-center gap-4">
-              <a href="#" className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
-                <MessageSquare className="h-5 w-5" />
+            <div className="flex flex-wrap items-center gap-3">
+              <a href="#" className="h-9 w-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-[#06C755] hover:text-white transition-all group" title="Line">
+                <MessageSquare className="h-4 w-4" />
               </a>
-              <a href="#" className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
-                <Camera className="h-5 w-5" />
+              <a href="#" className="h-9 w-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-black hover:text-white transition-all group" title="TikTok">
+                <Camera className="h-4 w-4" />
               </a>
-              <a href="#" className="h-10 w-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
-                <Send className="h-5 w-5" />
+              <a href="#" className="h-9 w-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 hover:text-white transition-all group" title="Instagram">
+                <Send className="h-4 w-4" />
+              </a>
+              <a href="#" className="h-9 w-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition-all group" title="Facebook">
+                <ExternalLink className="h-4 w-4" />
+              </a>
+              <a href="#" className="h-9 w-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-black hover:text-white transition-all group" title="X (Twitter)">
+                <span className="text-sm font-black">X</span>
               </a>
             </div>
           </div>
