@@ -13,9 +13,11 @@ interface Partner {
   phone: string;
   username: string;
   password?: string;
-  vehicleModel: string;
-  licensePlate: string;
-  plateProvince: string;
+  vehicleTypes: string[];
+  vehicleDetails?: Record<string, { model: string; plate: string; province: string }>;
+  vehicleModel?: string;
+  licensePlate?: string;
+  plateProvince?: string;
   baseProvince: string;
   baseDistrict: string;
   status: 'pending' | 'approved' | 'rejected';
@@ -304,15 +306,33 @@ export default function AdminVendorsPage() {
                       <h4 className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-blue-600 mb-4">
                         <Truck className="h-3 w-3" /> ข้อมูลยานพาหนะ
                       </h4>
-                      <div className="bg-slate-50 rounded-xl p-4 space-y-3">
-                         <div className="flex justify-between">
-                            <span className="text-xs text-slate-500 font-bold">รุ่นรถ</span>
-                            <span className="text-sm text-[#001A3D] font-black">{selectedPartner.vehicleModel}</span>
-                         </div>
-                         <div className="flex justify-between">
-                            <span className="text-xs text-slate-500 font-bold">ทะเบียน</span>
-                            <span className="text-sm text-[#001A3D] font-black">{selectedPartner.licensePlate} {selectedPartner.plateProvince}</span>
-                         </div>
+                      <div className="space-y-3">
+                        {selectedPartner.vehicleDetails ? (
+                          Object.entries(selectedPartner.vehicleDetails).map(([type, details]: [string, any]) => (
+                            <div key={type} className="bg-slate-50 rounded-xl p-4 space-y-2 border border-slate-100">
+                              <p className="text-[9px] font-black text-blue-600 uppercase tracking-widest">{type}</p>
+                              <div className="flex justify-between border-b border-slate-200/50 pb-2">
+                                <span className="text-xs text-slate-500 font-bold">รุ่นรถ</span>
+                                <span className="text-sm text-[#001A3D] font-black">{details.model}</span>
+                              </div>
+                              <div className="flex justify-between pt-1">
+                                <span className="text-xs text-slate-500 font-bold">ทะเบียน</span>
+                                <span className="text-sm text-[#001A3D] font-black">{details.plate} {details.province}</span>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="bg-slate-50 rounded-xl p-4 space-y-3">
+                             <div className="flex justify-between">
+                                <span className="text-xs text-slate-500 font-bold">รุ่นรถ</span>
+                                <span className="text-sm text-[#001A3D] font-black">{selectedPartner.vehicleModel}</span>
+                             </div>
+                             <div className="flex justify-between">
+                                <span className="text-xs text-slate-500 font-bold">ทะเบียน</span>
+                                <span className="text-sm text-[#001A3D] font-black">{selectedPartner.licensePlate} {selectedPartner.plateProvince}</span>
+                             </div>
+                          </div>
+                        )}
                       </div>
                     </div>
 
