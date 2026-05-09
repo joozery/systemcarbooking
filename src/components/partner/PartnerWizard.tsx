@@ -30,8 +30,8 @@ export function PartnerWizard() {
     firstName: "", lastName: "", nickname: "",
     username: "", password: "",
     phone: "", phoneSecondary: "", lineId: "",
-    vehicleTypes: [] as string[], vehicleModel: "",
-    licensePlate: "", plateProvince: "",
+    vehicleTypes: [] as string[],
+    vehicleDetails: {} as Record<string, { model: string; plate: string; province: string }>,
     extraEquipment: [] as string[],
     baseProvince: "", baseDistrict: "",
     serviceScope: "เฉพาะในจังหวัดและปริมณฑล",
@@ -51,12 +51,25 @@ export function PartnerWizard() {
   const updateData = (key: string, value: any) => setData((prev) => ({ ...prev, [key]: value }));
   
   const toggleVehicleType = (type: string) => {
-    setData(prev => ({
-      ...prev,
-      vehicleTypes: prev.vehicleTypes.includes(type) 
+    setData(prev => {
+      const isSelected = prev.vehicleTypes.includes(type);
+      const newTypes = isSelected 
         ? prev.vehicleTypes.filter(t => t !== type)
-        : [...prev.vehicleTypes, type]
-    }));
+        : [...prev.vehicleTypes, type];
+      
+      const newDetails = { ...prev.vehicleDetails };
+      if (isSelected) {
+        delete newDetails[type];
+      } else {
+        newDetails[type] = { model: "", plate: "", province: "" };
+      }
+
+      return {
+        ...prev,
+        vehicleTypes: newTypes,
+        vehicleDetails: newDetails
+      };
+    });
   };
 
   const toggleEquipment = (item: string) => {

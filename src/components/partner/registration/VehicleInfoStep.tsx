@@ -74,30 +74,55 @@ export function VehicleInfoStep({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <FormInput 
-          label="ยี่ห้อและรุ่นรถ"
-          placeholder="เช่น Isuzu NPR 150"
-          value={data.vehicleModel}
-          onChange={(val) => updateData("vehicleModel", val)}
-          icon={Settings}
-        />
-        <div className="grid grid-cols-2 gap-3">
-          <FormInput 
-            label="ทะเบียนรถ"
-            placeholder="1กข-1234"
-            value={data.licensePlate}
-            onChange={(val) => updateData("licensePlate", val)}
-            icon={Hash}
-          />
-          <FormInput 
-            label="จังหวัด"
-            placeholder="กรุงเทพฯ"
-            value={data.plateProvince}
-            onChange={(val) => updateData("plateProvince", val)}
-          />
+      {data.vehicleTypes.length > 0 && (
+        <div className="space-y-8">
+          {data.vehicleTypes.map((type: string) => (
+            <div key={type} className="p-6 rounded-2xl bg-white border border-slate-100 shadow-sm space-y-6">
+              <div className="flex items-center gap-2 text-blue-600">
+                <Truck className="h-4 w-4" />
+                <span className="text-sm font-black tracking-tight uppercase">{type}</span>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormInput 
+                  label="ยี่ห้อและรุ่นรถ"
+                  placeholder="เช่น Isuzu NPR 150"
+                  value={data.vehicleDetails[type]?.model || ""}
+                  onChange={(val) => {
+                    const newDetails = { ...data.vehicleDetails };
+                    newDetails[type] = { ...newDetails[type], model: val };
+                    updateData("vehicleDetails", newDetails);
+                  }}
+                  icon={Settings}
+                />
+                <div className="grid grid-cols-2 gap-3">
+                  <FormInput 
+                    label="ทะเบียนรถ"
+                    placeholder="1กข-1234"
+                    value={data.vehicleDetails[type]?.plate || ""}
+                    onChange={(val) => {
+                      const newDetails = { ...data.vehicleDetails };
+                      newDetails[type] = { ...newDetails[type], plate: val };
+                      updateData("vehicleDetails", newDetails);
+                    }}
+                    icon={Hash}
+                  />
+                  <FormInput 
+                    label="จังหวัด"
+                    placeholder="กรุงเทพฯ"
+                    value={data.vehicleDetails[type]?.province || ""}
+                    onChange={(val) => {
+                      const newDetails = { ...data.vehicleDetails };
+                      newDetails[type] = { ...newDetails[type], province: val };
+                      updateData("vehicleDetails", newDetails);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      )}
 
       <div className="space-y-4">
         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">อุปกรณ์เสริมที่มี</label>

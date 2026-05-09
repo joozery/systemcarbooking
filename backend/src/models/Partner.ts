@@ -13,9 +13,10 @@ export interface IPartner extends Document {
   password: string;
   // 2. Vehicle
   vehicleTypes: string[];
-  vehicleModel: string;
-  licensePlate: string;
-  plateProvince: string;
+  vehicleDetails?: Record<string, { model: string; plate: string; province: string }>;
+  vehicleModel?: string;
+  licensePlate?: string;
+  plateProvince?: string;
   extraEquipment: string[];
   // 3. Zone
   baseProvince: string;
@@ -50,9 +51,10 @@ const PartnerSchema: Schema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   vehicleTypes: [{ type: String }],
-  vehicleModel: { type: String, required: true },
-  licensePlate: { type: String, required: true },
-  plateProvince: { type: String, required: true },
+  vehicleDetails: { type: Map, of: Object },
+  vehicleModel: { type: String },
+  licensePlate: { type: String },
+  plateProvince: { type: String },
   extraEquipment: [{ type: String }],
   baseProvince: { type: String, required: true },
   baseDistrict: { type: String, required: true },
