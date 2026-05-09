@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MessageCircle, X, Phone, Mail, Facebook, MessageSquare, Headphones } from "lucide-react";
+import { MessageCircle, X, Phone, Mail, MessageSquare, Headphones, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function ChatWidget() { // Keep name ChatWidget for layout compatibility, or rename if preferred
@@ -26,7 +26,7 @@ export function ChatWidget() { // Keep name ChatWidget for layout compatibility,
     },
     { 
       name: "Facebook Messenger", 
-      icon: <Facebook className="h-5 w-5" />, 
+      icon: <Globe className="h-5 w-5" />, 
       value: "Crown Wealth Official", 
       href: "https://m.me/yourpage",
       color: "bg-[#0084FF]",
