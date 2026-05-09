@@ -44,14 +44,17 @@ export function Navbar() {
         <div className="flex items-center gap-3 md:gap-6">
           <div className="hidden items-center gap-2 text-sm font-bold md:flex text-[#001A3D]">
             <Phone className="h-4 w-4 fill-current text-[#0047AB]" />
-            02-123-4567
+            081-1657699
           </div>
-          <Link href="/partner/register" className="hidden text-sm font-bold text-[#0047AB] hover:text-[#001A3D] transition-colors lg:block">
+          <Link href="/partner/register" className="hidden text-sm font-bold text-slate-500 hover:text-[#0047AB] transition-colors lg:block">
             ร่วมเป็นพาร์ทเนอร์
           </Link>
-          <button className="rounded-lg bg-[#001A3D] px-5 md:px-6 py-2.5 text-xs font-bold text-white transition-all hover:bg-[#002A5D] shadow-md shadow-[#001A3D]/20">
-            เข้าสู่ระบบ
-          </button>
+          <Link 
+            href="/partner/login" 
+            className="rounded-lg bg-[#001A3D] px-5 md:px-6 py-2.5 text-xs font-bold text-white transition-all hover:bg-[#002A5D] shadow-md shadow-[#001A3D]/20"
+          >
+            ศูนย์พาร์ทเนอร์
+          </Link>
           
           {/* Mobile Menu Toggle */}
           <button 
@@ -85,15 +88,22 @@ export function Navbar() {
               ))}
               <div className="pt-4 border-t border-slate-50 flex flex-col gap-4">
                 <Link 
+                  href="/partner/login"
+                  onClick={() => setIsOpen(false)}
+                  className="text-base font-black text-[#001A3D]"
+                >
+                  ศูนย์พาร์ทเนอร์ (Vendor Login)
+                </Link>
+                <Link 
                   href="/partner/register"
                   onClick={() => setIsOpen(false)}
                   className="text-base font-bold text-[#0047AB]"
                 >
-                  ร่วมเป็นพาร์ทเนอร์
+                  สมัครร่วมเป็นพาร์ทเนอร์
                 </Link>
                 <div className="flex items-center gap-2 text-sm font-bold text-[#001A3D]">
                   <Phone className="h-4 w-4 fill-current text-[#0047AB]" />
-                  02-123-4567
+                  081-1657699
                 </div>
               </div>
             </div>

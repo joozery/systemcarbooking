@@ -26,7 +26,7 @@ export function Footer() {
               ด้วยเครือข่ายพาร์ทเนอร์ที่ครอบคลุมทั่วประเทศ ตลอด 24 ชั่วโมง
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <a href="#" className="h-9 w-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-[#06C755] hover:text-white transition-all group" title="Line">
+              <a href="https://line.me/ti/p/@cw.service" target="_blank" className="h-9 w-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-[#06C755] hover:text-white transition-all group" title="Line">
                 <MessageSquare className="h-4 w-4" />
               </a>
               <a href="#" className="h-9 w-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-black hover:text-white transition-all group" title="TikTok">
@@ -74,15 +74,15 @@ export function Footer() {
             <ul className="space-y-4 text-sm text-blue-100/60">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-blue-400 shrink-0" />
-                <span>123 อาคารคราวน์ ชั้น 15 ถนนสุขุมวิท <br/>แขวงคลองเตย เขตวัฒนา กรุงเทพฯ 10110</span>
+                <span>994/195 เจซิตี้ ซอย 9 ถนนแพรกษา <br/>ตำบลแพรกษา อำเภอเมืองสมุทรปราการ จังหวัดสมุทรปราการ 10280</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-blue-400 shrink-0" />
-                <span>02-123-4567 (Call Center 24 ชม.)</span>
+                <span>081-1657699 (Call Center HotLine 24 ชม.)</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-blue-400 shrink-0" />
-                <span>contact@crownwealth.com</span>
+                <span>ckw.serviceth@gmail.com</span>
               </li>
             </ul>
           </div>

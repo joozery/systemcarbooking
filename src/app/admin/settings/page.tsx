@@ -90,21 +90,21 @@ export default function SettingsPage() {
                     <label className="text-xs font-black uppercase tracking-widest text-slate-400">อีเมลติดต่อกลาง</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
-                      <input type="email" defaultValue="support@crownwealth.com" className="w-full rounded-xl bg-slate-50 pl-12 pr-4 py-3.5 text-sm font-bold outline-none border border-slate-100 focus:border-blue-400 focus:bg-white transition-all" />
+                      <input type="email" defaultValue="ckw.serviceth@gmail.com" className="w-full rounded-xl bg-slate-50 pl-12 pr-4 py-3.5 text-sm font-bold outline-none border border-slate-100 focus:border-blue-400 focus:bg-white transition-all" />
                     </div>
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-black uppercase tracking-widest text-slate-400">เบอร์โทรศัพท์ Call Center</label>
                     <div className="relative">
                       <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
-                      <input type="text" defaultValue="02-123-4567" className="w-full rounded-xl bg-slate-50 pl-12 pr-4 py-3.5 text-sm font-bold outline-none border border-slate-100 focus:border-blue-400 focus:bg-white transition-all" />
+                      <input type="text" defaultValue="081-1657699" className="w-full rounded-xl bg-slate-50 pl-12 pr-4 py-3.5 text-sm font-bold outline-none border border-slate-100 focus:border-blue-400 focus:bg-white transition-all" />
                     </div>
                   </div>
                   <div className="md:col-span-2 space-y-2">
                     <label className="text-xs font-black uppercase tracking-widest text-slate-400">ที่อยู่สำนักงานใหญ่</label>
                     <div className="relative">
                       <MapPin className="absolute left-4 top-4 h-4 w-4 text-slate-300" />
-                      <textarea rows={3} defaultValue="123 อาคารคราวน์ ชั้น 15 ถนนสุขุมวิท แขวงคลองเตย เขตวัฒนา กรุงเทพฯ 10110" className="w-full rounded-xl bg-slate-50 pl-12 pr-4 py-4 text-sm font-bold outline-none border border-slate-100 focus:border-blue-400 focus:bg-white transition-all resize-none" />
+                      <textarea rows={3} defaultValue="994/195 เจซิตี้ ซอย 9 ถนนแพรกษา ตำบลแพรกษา อำเภอเมืองสมุทรปราการ จังหวัดสมุทรปราการ 10280" className="w-full rounded-xl bg-slate-50 pl-12 pr-4 py-4 text-sm font-bold outline-none border border-slate-100 focus:border-blue-400 focus:bg-white transition-all resize-none" />
                     </div>
                   </div>
                 </div>

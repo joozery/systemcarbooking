@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, MapPin, Phone, Send, Globe, MessageCircle, Share2, ThumbsUp } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Globe, MessageCircle, Share2, ThumbsUp, Camera } from "lucide-react";
 
 export function ContactUs() {
   return (
@@ -18,9 +18,9 @@ export function ContactUs() {
 
             <div className="mt-10 space-y-6">
               {[
-                { icon: Phone, label: "เบอร์โทรศัพท์", value: "02-123-4567, 081-234-5678" },
-                { icon: Mail, label: "อีเมล", value: "contact@crownwealth.com" },
-                { icon: MapPin, label: "ที่ตั้งสำนักงาน", value: "123 อาคารสาทรทาวเวอร์ ชั้น 15 ถนนสาทรใต้ แขวงทุ่งมหาเมฆ เขตสาทร กรุงเทพฯ 10120" },
+                { icon: Phone, label: "Call Center HotLine", value: "081-1657699" },
+                { icon: Mail, label: "อีเมล (Email)", value: "ckw.serviceth@gmail.com" },
+                { icon: MapPin, label: "ที่ตั้งสำนักงานใหญ่", value: "994/195 เจซิตี้ ซอย 9 ถนนแพรกษา ตำบลแพรกษา อำเภอเมืองสมุทรปราการ จังหวัดสมุทรปราการ 10280" },
               ].map((item, i) => (
                 <div key={i} className="flex gap-4">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/5 border border-white/10">
@@ -39,14 +39,15 @@ export function ContactUs() {
                <div className="text-[9px] font-black uppercase tracking-widest text-slate-500 mb-4">Social Media Channels</div>
                <div className="flex flex-wrap gap-3">
                   {[
-                    { label: "Line", icon: MessageCircle, color: "hover:bg-[#06C755]" },
+                    { label: "Line", icon: MessageCircle, color: "hover:bg-[#06C755]", href: "https://line.me/ti/p/@cw.service" },
                     { label: "TikTok", icon: Globe, color: "hover:bg-black" },
                     { label: "IG", icon: Camera, color: "hover:bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500" },
                     { label: "Facebook", icon: ThumbsUp, color: "hover:bg-[#1877F2]" }
                   ].map((social, i) => (
                     <a 
                       key={i} 
-                      href="#"
+                      href={social.href || "#"}
+                      target={social.href ? "_blank" : undefined}
                       className={`flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition-all ${social.color} hover:scale-110 active:scale-95`}
                       title={social.label}
                     >

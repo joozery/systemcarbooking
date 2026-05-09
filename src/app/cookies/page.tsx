@@ -102,9 +102,9 @@ export default function CookiePolicyPage() {
                 หากคุณมีคำถามหรือข้อสงสัยเกี่ยวกับนโยบายคุกกี้ของเรา กรุณาติดต่อเราได้ที่:
               </p>
               <div className="bg-[#001A3D] text-white p-8 rounded-2xl shadow-xl">
-                <p className="font-black mb-2">ฝ่ายคุ้มครองข้อมูลส่วนบุคคล (PDPA Team)</p>
-                <p className="text-sm opacity-80">อีเมล: privacy@crownwealth.com</p>
-                <p className="text-sm opacity-80">โทรศัพท์: 02-123-4567</p>
+                <p className="font-black mb-2">ฝ่ายบริการลูกค้า (Customer Service Team)</p>
+                <p className="text-sm opacity-80">อีเมล: ckw.serviceth@gmail.com</p>
+                <p className="text-sm opacity-80">โทรศัพท์: 081-1657699</p>
               </div>
             </section>
 

@@ -89,7 +89,7 @@ export default function TermsOfServicePage() {
                 <HelpCircle className="h-6 w-6 text-slate-400 shrink-0 mt-1" />
                 <div>
                   <h4 className="font-black text-[#001A3D] mb-2">ต้องการความช่วยเหลือเพิ่มเติม?</h4>
-                  <p className="text-sm">หากคุณมีข้อสงสัยเกี่ยวกับเงื่อนไขการใช้บริการ กรุณาติดต่อทีมกฎหมายของเราที่ legal@crownwealth.com หรือโทร 02-123-4567</p>
+                  <p className="text-sm">หากคุณมีข้อสงสัยเกี่ยวกับเงื่อนไขการใช้บริการ กรุณาติดต่อทีมงานของเราที่ ckw.serviceth@gmail.com หรือโทร 081-1657699</p>
                 </div>
               </div>
             </section>
