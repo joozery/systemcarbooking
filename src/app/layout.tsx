@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 import { CookieConsent } from "@/components/layout/CookieConsent";
+import { ChatWidget } from "@/components/common/ChatWidget";
 
 export default function RootLayout({
   children,
@@ -32,6 +33,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full font-sans" suppressHydrationWarning>
         {children}
+        <ChatWidget />
         <CookieConsent />
       </body>
     </html>
