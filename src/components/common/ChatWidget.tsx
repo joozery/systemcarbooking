@@ -1,47 +1,46 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, User, Headset, MoreVertical, Smile } from "lucide-react";
+import { useState } from "react";
+import { MessageCircle, X, Phone, Mail, Facebook, MessageSquare, Headphones } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function ChatWidget() {
+export function ChatWidget() { // Keep name ChatWidget for layout compatibility, or rename if preferred
   const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [chatHistory, setChatHistory] = useState([
-    { id: 1, text: "สวัสดีครับ! Crown Wealth ยินดีให้บริการ มีอะไรให้เราช่วยไหมครับ?", isBot: true, time: "10:00" },
-  ]);
-  const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [chatHistory, isOpen]);
-
-  const handleSend = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!message.trim()) return;
-
-    const newUserMsg = {
-      id: Date.now(),
-      text: message,
-      isBot: false,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-
-    setChatHistory([...chatHistory, newUserMsg]);
-    setMessage("");
-
-    // Simple Auto-reply Mockup
-    setTimeout(() => {
-      setChatHistory(prev => [...prev, {
-        id: Date.now() + 1,
-        text: "ขอบคุณสำหรับข้อความครับ เจ้าหน้าที่กำลังจะเข้ามาดูแลคุณในสักครู่...",
-        isBot: true,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }]);
-    }, 1000);
-  };
+  const contactMethods = [
+    { 
+      name: "โทรด่วน 24 ชม.", 
+      icon: <Phone className="h-5 w-5" />, 
+      value: "02-xxx-xxxx", 
+      href: "tel:020000000",
+      color: "bg-green-500",
+      label: "ฝ่ายบริการลูกค้า"
+    },
+    { 
+      name: "Line Official", 
+      icon: <MessageSquare className="h-5 w-5" />, 
+      value: "@crownwealth", 
+      href: "https://line.me/ti/p/~@yourid",
+      color: "bg-[#06C755]",
+      label: "แชทกับเจ้าหน้าที่"
+    },
+    { 
+      name: "Facebook Messenger", 
+      icon: <Facebook className="h-5 w-5" />, 
+      value: "Crown Wealth Official", 
+      href: "https://m.me/yourpage",
+      color: "bg-[#0084FF]",
+      label: "ติดตามข่าวสาร"
+    },
+    { 
+      name: "อีเมล", 
+      icon: <Mail className="h-5 w-5" />, 
+      value: "support@crownwealth.com", 
+      href: "mailto:support@crownwealth.com",
+      color: "bg-red-500",
+      label: "ส่งข้อเสนอแนะ"
+    },
+  ];
 
   return (
     <div className="fixed bottom-6 right-6 z-[9999] font-noto-thai">
@@ -51,91 +50,45 @@ export function ChatWidget() {
             initial={{ opacity: 0, y: 20, scale: 0.9, transformOrigin: "bottom right" }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="mb-4 w-[360px] md:w-[400px] h-[550px] bg-white rounded-[28px] shadow-[0_24px_48px_-12px_rgba(0,0,0,0.18)] border border-slate-100 overflow-hidden flex flex-col"
+            className="mb-4 w-[320px] bg-white rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] border border-slate-100 overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-[#001A3D] p-5 text-white flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
-                    <Headset className="h-5 w-5" />
-                  </div>
-                  <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-[#001A3D] rounded-full" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-sm">Crown Support</h3>
-                  <p className="text-[10px] text-blue-200">ออนไลน์พร้อมให้บริการ</p>
-                </div>
+            <div className="bg-[#001A3D] p-6 text-white text-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4">
+                 <div className="w-12 h-12 bg-white/5 rounded-full blur-xl" />
               </div>
-              <div className="flex items-center gap-2">
-                <button className="p-2 hover:bg-white/10 rounded-lg transition-colors">
-                  <MoreVertical className="h-4 w-4" />
-                </button>
-                <button 
-                  onClick={() => setIsOpen(false)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
+              <Headphones className="h-8 w-8 mx-auto mb-3 text-blue-400" />
+              <h3 className="font-black text-lg tracking-tight">ศูนย์ช่วยเหลือลูกค้า</h3>
+              <p className="text-blue-200 text-[11px] font-medium opacity-80 uppercase tracking-widest mt-1">Crown Wealth Support</p>
             </div>
 
-            {/* Chat Content */}
-            <div 
-              ref={scrollRef}
-              className="flex-1 overflow-y-auto p-5 space-y-4 bg-slate-50/50"
-            >
-              {chatHistory.map((chat) => (
-                <div 
-                  key={chat.id} 
-                  className={`flex ${chat.isBot ? "justify-start" : "justify-end"} items-end gap-2`}
+            {/* Contact List */}
+            <div className="p-4 bg-slate-50/50 space-y-3">
+              {contactMethods.map((method, index) => (
+                <motion.a
+                  key={index}
+                  href={method.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="flex items-center gap-4 p-3 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-blue-100 transition-all group"
                 >
-                  {chat.isBot && (
-                    <div className="w-6 h-6 bg-slate-200 rounded-full flex items-center justify-center shrink-0 mb-1">
-                      <User className="h-3 w-3 text-slate-500" />
-                    </div>
-                  )}
-                  <div className="flex flex-col gap-1 max-w-[80%]">
-                    <div className={`px-4 py-2.5 rounded-2xl text-sm font-medium shadow-sm ${
-                      chat.isBot 
-                        ? "bg-white text-slate-700 rounded-bl-none border border-slate-100" 
-                        : "bg-[#0047AB] text-white rounded-br-none"
-                    }`}>
-                      {chat.text}
-                    </div>
-                    <span className="text-[9px] text-slate-400 px-1">{chat.time}</span>
+                  <div className={`${method.color} text-white p-3 rounded-xl shadow-lg shadow-inherit group-hover:scale-110 transition-transform`}>
+                    {method.icon}
                   </div>
-                </div>
+                  <div className="flex-1">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{method.label}</p>
+                    <p className="text-sm font-bold text-slate-700">{method.name}</p>
+                  </div>
+                </motion.a>
               ))}
             </div>
 
-            {/* Input Area */}
-            <div className="p-4 bg-white border-t border-slate-100">
-              <form 
-                onSubmit={handleSend}
-                className="flex items-center gap-2 bg-slate-100 rounded-2xl px-4 py-2 focus-within:ring-2 ring-blue-500/20 transition-all"
-              >
-                <button type="button" className="text-slate-400 hover:text-slate-600">
-                  <Smile className="h-5 w-5" />
-                </button>
-                <input 
-                  type="text" 
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="พิมพ์ข้อความของคุณ..."
-                  className="flex-1 bg-transparent border-none outline-none text-sm py-1.5 font-medium placeholder:text-slate-400"
-                />
-                <button 
-                  type="submit"
-                  disabled={!message.trim()}
-                  className="bg-[#001A3D] text-white p-2 rounded-xl hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:scale-100"
-                >
-                  <Send className="h-4 w-4" />
-                </button>
-              </form>
-              <p className="text-center text-[10px] text-slate-300 mt-3 font-medium">
-                Powered by Crown Wealth Support
-              </p>
+            {/* Footer */}
+            <div className="p-4 bg-white border-t border-slate-50 text-center">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">พร้อมให้บริการตลอด 24 ชั่วโมง</p>
             </div>
           </motion.div>
         )}
@@ -147,12 +100,12 @@ export function ChatWidget() {
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
         className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${
-          isOpen ? "bg-white text-[#001A3D] rotate-90" : "bg-[#001A3D] text-white hover:bg-[#002A5D]"
+          isOpen ? "bg-white text-[#001A3D] rotate-90" : "bg-[#001A3D] text-white hover:shadow-blue-900/20"
         }`}
       >
         {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
         {!isOpen && (
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 border-2 border-white rounded-full animate-pulse" />
+          <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 border-2 border-white rounded-full" />
         )}
       </motion.button>
     </div>
