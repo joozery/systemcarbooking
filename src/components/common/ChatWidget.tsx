@@ -43,7 +43,7 @@ export function ChatWidget() { // Keep name ChatWidget for layout compatibility,
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] font-noto-thai">
+    <div className="fixed bottom-6 right-6 z-[9999] font-noto-thai flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div
